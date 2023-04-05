@@ -42,11 +42,7 @@ public class PlayerMotor : MonoBehaviour {
         _walk.Disable();
         _default.Disable();
     }
-    
-    private void Update() {
-        Debug.Log("x: " + xSens + " y: " + ySens);
-    }
-    
+
     private void FixedUpdate() {
         Movement();
     }
