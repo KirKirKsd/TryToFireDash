@@ -62,6 +62,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3b52b2c0-2243-42bc-b599-9d7bd02ab64e"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,28 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""Flashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9aad7c1d-1def-45ce-9253-9175b9a9c8e1"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b14c0c4c-f37d-45e4-893f-568a969a88dd"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -247,6 +278,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_Walk_Look = m_Walk.FindAction("Look", throwIfNotFound: true);
         m_Walk_Jump = m_Walk.FindAction("Jump", throwIfNotFound: true);
         m_Walk_Flashlight = m_Walk.FindAction("Flashlight", throwIfNotFound: true);
+        m_Walk_Sprint = m_Walk.FindAction("Sprint", throwIfNotFound: true);
         // Default
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
@@ -315,6 +347,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Walk_Look;
     private readonly InputAction m_Walk_Jump;
     private readonly InputAction m_Walk_Flashlight;
+    private readonly InputAction m_Walk_Sprint;
     public struct WalkActions
     {
         private @PlayerController m_Wrapper;
@@ -323,6 +356,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Walk_Look;
         public InputAction @Jump => m_Wrapper.m_Walk_Jump;
         public InputAction @Flashlight => m_Wrapper.m_Walk_Flashlight;
+        public InputAction @Sprint => m_Wrapper.m_Walk_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Walk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -344,6 +378,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Flashlight.started += instance.OnFlashlight;
             @Flashlight.performed += instance.OnFlashlight;
             @Flashlight.canceled += instance.OnFlashlight;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         private void UnregisterCallbacks(IWalkActions instance)
@@ -360,6 +397,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Flashlight.started -= instance.OnFlashlight;
             @Flashlight.performed -= instance.OnFlashlight;
             @Flashlight.canceled -= instance.OnFlashlight;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         public void RemoveCallbacks(IWalkActions instance)
@@ -429,6 +469,7 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnFlashlight(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
     public interface IDefaultActions
     {

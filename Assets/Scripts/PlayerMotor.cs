@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour {
@@ -7,30 +8,43 @@ public class PlayerMotor : MonoBehaviour {
     private PlayerController.DefaultActions _default;
         
     [SerializeField] private Rigidbody rb;
-    private PauseMenu _pauseMenuScript;
     public Flashlight flashlightScript;
+    public PauseMenu pauseMenuScript;
 
-    private float _speed = 2f;
+    private float speed = 2f;
+    private float normalSpeed;
 
-    public static float xSens = 25f;
-    public static float ySens = 25f;
+    private static float xSens = 25f;
+    private static float ySens = 25f;
     private Vector2 _rotation;
     [SerializeField] private Camera cam;
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform feet;
     private float _jumpForce = 3f;
+    
+    private float stamina = 10f;
+    private float maxStamina;
+    private float sprintSpeed = 4f;
+    private float timeNeedsStaminaRegenerate = 1.5f;
+    private float timeStaminaRegenerate;
 
     private void Awake() {
+        Cursor.visible = false;
+        
         _controller = new PlayerController();
         _walk = _controller.Walk;
         _default = _controller.Default;
         _walk.Jump.performed += _ => Jump();
 
-        _pauseMenuScript = GetComponent<PauseMenu>();
-        _default.Pause.performed += _ => _pauseMenuScript.OnEsc();
-
         _walk.Flashlight.performed += _ => flashlightScript.SwitchPower();
+        _default.Pause.performed += _ => pauseMenuScript.Switch();
+    }
+
+    private void Start() {
+        normalSpeed = speed;
+        maxStamina = stamina;
+        timeStaminaRegenerate = timeNeedsStaminaRegenerate;
     }
 
     private void OnEnable() {
@@ -43,6 +57,11 @@ public class PlayerMotor : MonoBehaviour {
         _default.Disable();
     }
 
+    private void Update() {
+        Sprint(_walk.Sprint.ReadValue<float>() > 0.1f);
+        print(speed + " " + stamina);
+    }
+
     private void FixedUpdate() {
         Movement();
     }
@@ -50,9 +69,9 @@ public class PlayerMotor : MonoBehaviour {
     private void LateUpdate() {
         Look();
     }
-    
+
     private void Movement() {
-        var input = _walk.Movement.ReadValue<Vector2>() * _speed;
+        var input = _walk.Movement.ReadValue<Vector2>() * speed;
         var velocity = transform.TransformDirection(input.x, rb.velocity.y, input.y);
         rb.velocity = velocity;
     }
@@ -76,6 +95,31 @@ public class PlayerMotor : MonoBehaviour {
 
     private bool GroundCheck() {
         return Physics.Raycast(feet.position, feet.forward, out _, 0.15f, groundLayer);
+    }
+
+    private void Sprint(bool isSprintBtn) {
+
+        if (isSprintBtn && stamina > 0f) {
+            if (stamina > 0f) {
+                stamina -= 2f * Time.deltaTime;
+            }
+            speed = sprintSpeed;
+            timeStaminaRegenerate = 0f;
+        }
+        else if (isSprintBtn) {
+            timeStaminaRegenerate = 0f;
+            speed = normalSpeed;
+        }
+        else if (timeStaminaRegenerate < timeNeedsStaminaRegenerate) {
+            timeStaminaRegenerate += Time.deltaTime;
+            speed = normalSpeed;
+        }
+        else {
+            if (stamina < maxStamina) {
+                stamina += 2f * Time.deltaTime;
+            }
+            speed = normalSpeed;
+        }
     }
     
 }

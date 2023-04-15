@@ -1,51 +1,58 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class PauseMenu : MonoBehaviour {
 
-    [SerializeField] private GameObject pauseMenuUI;
     private bool isPaused;
-
-    public Slider xSens;
-    public Slider ySens;
     
+    private UIDocument pauseMenuDoc;
+    private VisualElement pauseMenuRoot;
+
+    private VisualElement pauseMenuPanel;
+
     private void Start() {
-        xSens.value = PlayerMotor.xSens;
-        ySens.value = PlayerMotor.ySens;
+        pauseMenuDoc = GetComponent<UIDocument>();
+        pauseMenuRoot = pauseMenuDoc.rootVisualElement;
+
+        pauseMenuPanel = pauseMenuRoot.Q<VisualElement>("Panel");
+        
+        pauseMenuRoot.Q<Button>("Resume").clicked += Switch;
+        pauseMenuRoot.Q<Button>("Settings").clicked += Settings;
+        pauseMenuRoot.Q<Button>("Exit").clicked += Exit;
     }
 
-    
-
-    public void OnEsc() {
+    public void Switch() {
         switch (isPaused) {
             case true:
-                Resume();
-                break;
-            case false:
                 Pause();
                 break;
+            case false:
+                Resume();
+                break;
         }
+
+        isPaused = !isPaused;
+    }
+    
+    private void Resume() {
+        Cursor.visible = false;
+        pauseMenuPanel.style.visibility = Visibility.Hidden;
+        Time.timeScale = 1f;
     }
 
     private void Pause() {
-        pauseMenuUI.SetActive(true);
+        Cursor.visible = true;
+        pauseMenuPanel.style.visibility = Visibility.Visible;
         Time.timeScale = 0f;
-        isPaused = true;
     }
 
-    private void Resume() {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+    private void Settings() {
+        
     }
-
-    public void xSensChange() {
-        PlayerMotor.xSens = xSens.value;
-    }
-
-    public void ySensChange() {
-        PlayerMotor.ySens = ySens.value;
+    
+    private static void Exit() {
+        Application.Quit();
     }
 
 }
