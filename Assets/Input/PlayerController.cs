@@ -71,6 +71,33 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeGunTo1"",
+                    ""type"": ""Button"",
+                    ""id"": ""65b4fff9-ad06-4303-9d1f-ceb3b8f24223"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeGunTo2"",
+                    ""type"": ""Button"",
+                    ""id"": ""3aa98aa2-b95d-4bbb-9ec3-02a8bae9bc30"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeGunTo3"",
+                    ""type"": ""Button"",
+                    ""id"": ""21c12a84-b4ec-4369-ab9a-e09ce2b1501f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +254,39 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1e424f6-cd8b-4b45-98c5-d98cb26e55a2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGunTo1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1739ea3-ae3a-4fe3-87a7-47cf28e548fa"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGunTo2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40690c5e-2e28-497f-b97d-40ba37702103"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGunTo3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -279,6 +339,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_Walk_Jump = m_Walk.FindAction("Jump", throwIfNotFound: true);
         m_Walk_Flashlight = m_Walk.FindAction("Flashlight", throwIfNotFound: true);
         m_Walk_Sprint = m_Walk.FindAction("Sprint", throwIfNotFound: true);
+        m_Walk_ChangeGunTo1 = m_Walk.FindAction("ChangeGunTo1", throwIfNotFound: true);
+        m_Walk_ChangeGunTo2 = m_Walk.FindAction("ChangeGunTo2", throwIfNotFound: true);
+        m_Walk_ChangeGunTo3 = m_Walk.FindAction("ChangeGunTo3", throwIfNotFound: true);
         // Default
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
@@ -348,6 +411,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Walk_Jump;
     private readonly InputAction m_Walk_Flashlight;
     private readonly InputAction m_Walk_Sprint;
+    private readonly InputAction m_Walk_ChangeGunTo1;
+    private readonly InputAction m_Walk_ChangeGunTo2;
+    private readonly InputAction m_Walk_ChangeGunTo3;
     public struct WalkActions
     {
         private @PlayerController m_Wrapper;
@@ -357,6 +423,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Walk_Jump;
         public InputAction @Flashlight => m_Wrapper.m_Walk_Flashlight;
         public InputAction @Sprint => m_Wrapper.m_Walk_Sprint;
+        public InputAction @ChangeGunTo1 => m_Wrapper.m_Walk_ChangeGunTo1;
+        public InputAction @ChangeGunTo2 => m_Wrapper.m_Walk_ChangeGunTo2;
+        public InputAction @ChangeGunTo3 => m_Wrapper.m_Walk_ChangeGunTo3;
         public InputActionMap Get() { return m_Wrapper.m_Walk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -381,6 +450,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @ChangeGunTo1.started += instance.OnChangeGunTo1;
+            @ChangeGunTo1.performed += instance.OnChangeGunTo1;
+            @ChangeGunTo1.canceled += instance.OnChangeGunTo1;
+            @ChangeGunTo2.started += instance.OnChangeGunTo2;
+            @ChangeGunTo2.performed += instance.OnChangeGunTo2;
+            @ChangeGunTo2.canceled += instance.OnChangeGunTo2;
+            @ChangeGunTo3.started += instance.OnChangeGunTo3;
+            @ChangeGunTo3.performed += instance.OnChangeGunTo3;
+            @ChangeGunTo3.canceled += instance.OnChangeGunTo3;
         }
 
         private void UnregisterCallbacks(IWalkActions instance)
@@ -400,6 +478,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @ChangeGunTo1.started -= instance.OnChangeGunTo1;
+            @ChangeGunTo1.performed -= instance.OnChangeGunTo1;
+            @ChangeGunTo1.canceled -= instance.OnChangeGunTo1;
+            @ChangeGunTo2.started -= instance.OnChangeGunTo2;
+            @ChangeGunTo2.performed -= instance.OnChangeGunTo2;
+            @ChangeGunTo2.canceled -= instance.OnChangeGunTo2;
+            @ChangeGunTo3.started -= instance.OnChangeGunTo3;
+            @ChangeGunTo3.performed -= instance.OnChangeGunTo3;
+            @ChangeGunTo3.canceled -= instance.OnChangeGunTo3;
         }
 
         public void RemoveCallbacks(IWalkActions instance)
@@ -470,6 +557,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnFlashlight(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnChangeGunTo1(InputAction.CallbackContext context);
+        void OnChangeGunTo2(InputAction.CallbackContext context);
+        void OnChangeGunTo3(InputAction.CallbackContext context);
     }
     public interface IDefaultActions
     {

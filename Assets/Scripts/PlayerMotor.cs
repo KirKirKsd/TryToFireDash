@@ -12,13 +12,13 @@ public class PlayerMotor : MonoBehaviour {
 	[SerializeField] private Rigidbody rb;
 	public Flashlight flashlightScript;
 	public PauseMenuScript pauseMenuScript;
+	public GunSystem gunSystemScript;
 
 	private float speed = 2f;
 	private float normalSpeed;
 	private Vector3 velocity;
 
-	public static float xSens = 10f;
-	public static float ySens = 10f;
+	public static float sens = 50f;
 	private Vector2 _rotation;
 	[SerializeField] private Camera cam;
 
@@ -44,6 +44,10 @@ public class PlayerMotor : MonoBehaviour {
 
 		_walk.Flashlight.performed += _ => flashlightScript.SwitchPower();
 		_default.Pause.performed += _ => pauseMenuScript.Switch();
+
+		_walk.ChangeGunTo1.performed += _ => gunSystemScript.SetCurrentGun(1);
+		_walk.ChangeGunTo2.performed += _ => gunSystemScript.SetCurrentGun(2);
+		_walk.ChangeGunTo3.performed += _ => gunSystemScript.SetCurrentGun(3);
 	}
 
 	private void Start() {
@@ -84,9 +88,9 @@ public class PlayerMotor : MonoBehaviour {
 	private void Look() {
 		var input = _walk.Look.ReadValue<Vector2>();
 		
-		_rotation.y -= input.y * ySens * Time.deltaTime;
+		_rotation.y -= input.y * sens * 0.2f * Time.deltaTime;
 		_rotation.y = Mathf.Clamp(_rotation.y, -60f, 60f);
-		_rotation.x += input.x * xSens * Time.deltaTime;
+		_rotation.x += input.x * sens * 0.2f * Time.deltaTime;
 
 		transform.localRotation = Quaternion.Euler(0f, _rotation.x, 0f);
 		cam.transform.localRotation = Quaternion.Euler(_rotation.y, 0f, 0f); 
