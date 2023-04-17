@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GunSystem : MonoBehaviour {
@@ -7,13 +5,37 @@ public class GunSystem : MonoBehaviour {
     public GameObject gun1;
     public GameObject gun2;
     public GameObject gun3;
-    private int currentGun = 1;
+    public int currentGun = 1;
+
+    public GunRifle gunRifleScript;
 
     private void Start() {
         SetCurrentGun(1);
     }
 
+    public void Shoot() {
+        switch (currentGun) {
+            case 1:
+                gunRifleScript.Shoot();
+                break;
+        }
+    }
+
+    public void Reload() {
+        switch (currentGun) {
+            case 1:
+                gunRifleScript.StartReload();
+                break;
+        }
+    }
+    
     public void SetCurrentGun(int arg) {
+        arg = arg switch {
+            4 => 1,
+            0 => 3,
+            _ => arg
+        };
+
         switch (arg) {
             case 1:
                 currentGun = 1;

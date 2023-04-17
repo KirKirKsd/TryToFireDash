@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerMotor : MonoBehaviour {
 
 	private PlayerController _controller;
-	private PlayerController.WalkActions _walk;
+	private PlayerController.WalkActions walk;
 	private PlayerController.DefaultActions _default;
 		
 	[SerializeField] private Rigidbody rb;
@@ -38,16 +38,18 @@ public class PlayerMotor : MonoBehaviour {
 		Cursor.visible = false;
 		
 		_controller = new PlayerController();
-		_walk = _controller.Walk;
+		walk = _controller.Walk;
 		_default = _controller.Default;
-		_walk.Jump.performed += _ => Jump();
+		walk.Jump.performed += _ => Jump();
 
-		_walk.Flashlight.performed += _ => flashlightScript.SwitchPower();
+		walk.Flashlight.performed += _ => flashlightScript.SwitchPower();
 		_default.Pause.performed += _ => pauseMenuScript.Switch();
 
-		_walk.ChangeGunTo1.performed += _ => gunSystemScript.SetCurrentGun(1);
-		_walk.ChangeGunTo2.performed += _ => gunSystemScript.SetCurrentGun(2);
-		_walk.ChangeGunTo3.performed += _ => gunSystemScript.SetCurrentGun(3);
+		walk.ChangeGunTo1.performed += _ => gunSystemScript.SetCurrentGun(1);
+		walk.ChangeGunTo2.performed += _ => gunSystemScript.SetCurrentGun(2);
+		walk.ChangeGunTo3.performed += _ => gunSystemScript.SetCurrentGun(3);
+
+		walk.Relaod.performed += _ => gunSystemScript.Reload();
 	}
 
 	private void Start() {
@@ -57,18 +59,22 @@ public class PlayerMotor : MonoBehaviour {
 	}
 
 	private void OnEnable() {
-		_walk.Enable();
+		walk.Enable();
 		_default.Enable();
 	}
 
 	private void OnDisable() {
-		_walk.Disable();
+		walk.Disable();
 		_default.Disable();
 	}
 
 	private void Update() {
 		SetUI();
-		Sprint(_walk.Sprint.ReadValue<float>() > 0.1f && (Mathf.Abs(velocity.x) > 0.1f || Mathf.Abs(velocity.z) > 0.1f));
+		Sprint(walk.Sprint.ReadValue<float>() > 0.1f && (Mathf.Abs(velocity.x) > 0.1f || Mathf.Abs(velocity.z) > 0.1f));
+		if (walk.Shoot.ReadValue<float>() > 0.1f) {
+			Shoot();
+		}
+		ChangeGun();
 	}
 
 	private void FixedUpdate() {
@@ -80,13 +86,13 @@ public class PlayerMotor : MonoBehaviour {
 	}
 
 	private void Movement() {
-		var input = _walk.Movement.ReadValue<Vector2>() * speed;
+		var input = walk.Movement.ReadValue<Vector2>() * speed;
 		velocity = transform.TransformDirection(input.x, rb.velocity.y, input.y);
 		rb.velocity = velocity;
 	}
 
 	private void Look() {
-		var input = _walk.Look.ReadValue<Vector2>();
+		var input = walk.Look.ReadValue<Vector2>();
 		
 		_rotation.y -= input.y * sens * 0.2f * Time.deltaTime;
 		_rotation.y = Mathf.Clamp(_rotation.y, -60f, 60f);
@@ -136,4 +142,17 @@ public class PlayerMotor : MonoBehaviour {
 		speedTextUI.text = speed.ToString();
     }
 
+	private void Shoot() {
+		gunSystemScript.Shoot();
+	}
+	
+	private void ChangeGun() {
+		if (walk.ChangeGunScroll.ReadValue<float>() > 0) {
+			gunSystemScript.SetCurrentGun(gunSystemScript.currentGun - 1);
+		}
+		else if (walk.ChangeGunScroll.ReadValue<float>() < 0) {
+			gunSystemScript.SetCurrentGun(gunSystemScript.currentGun + 1);
+		}
+	}
+	
 }

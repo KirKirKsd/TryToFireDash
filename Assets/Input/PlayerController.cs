@@ -98,6 +98,33 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeGunScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""ef22a9e1-5289-4cfc-b651-8b142f434283"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""21a9d39f-3a03-4823-b88e-59b61dd4532f"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Relaod"",
+                    ""type"": ""Button"",
+                    ""id"": ""665f6360-6c2b-4a1e-9b0e-390bfb2450d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -287,6 +314,39 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeGunTo3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcaec82e-8d48-48f8-8f53-d22c7967796c"",
+                    ""path"": ""<Mouse>/scroll/Y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGunScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""79ed652e-4949-42ff-994d-c600f4f47a8f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07cdc57f-0648-4f5c-8c10-c919729e0201"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Relaod"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -342,6 +402,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         m_Walk_ChangeGunTo1 = m_Walk.FindAction("ChangeGunTo1", throwIfNotFound: true);
         m_Walk_ChangeGunTo2 = m_Walk.FindAction("ChangeGunTo2", throwIfNotFound: true);
         m_Walk_ChangeGunTo3 = m_Walk.FindAction("ChangeGunTo3", throwIfNotFound: true);
+        m_Walk_ChangeGunScroll = m_Walk.FindAction("ChangeGunScroll", throwIfNotFound: true);
+        m_Walk_Shoot = m_Walk.FindAction("Shoot", throwIfNotFound: true);
+        m_Walk_Relaod = m_Walk.FindAction("Relaod", throwIfNotFound: true);
         // Default
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
@@ -414,6 +477,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Walk_ChangeGunTo1;
     private readonly InputAction m_Walk_ChangeGunTo2;
     private readonly InputAction m_Walk_ChangeGunTo3;
+    private readonly InputAction m_Walk_ChangeGunScroll;
+    private readonly InputAction m_Walk_Shoot;
+    private readonly InputAction m_Walk_Relaod;
     public struct WalkActions
     {
         private @PlayerController m_Wrapper;
@@ -426,6 +492,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         public InputAction @ChangeGunTo1 => m_Wrapper.m_Walk_ChangeGunTo1;
         public InputAction @ChangeGunTo2 => m_Wrapper.m_Walk_ChangeGunTo2;
         public InputAction @ChangeGunTo3 => m_Wrapper.m_Walk_ChangeGunTo3;
+        public InputAction @ChangeGunScroll => m_Wrapper.m_Walk_ChangeGunScroll;
+        public InputAction @Shoot => m_Wrapper.m_Walk_Shoot;
+        public InputAction @Relaod => m_Wrapper.m_Walk_Relaod;
         public InputActionMap Get() { return m_Wrapper.m_Walk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -459,6 +528,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @ChangeGunTo3.started += instance.OnChangeGunTo3;
             @ChangeGunTo3.performed += instance.OnChangeGunTo3;
             @ChangeGunTo3.canceled += instance.OnChangeGunTo3;
+            @ChangeGunScroll.started += instance.OnChangeGunScroll;
+            @ChangeGunScroll.performed += instance.OnChangeGunScroll;
+            @ChangeGunScroll.canceled += instance.OnChangeGunScroll;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Relaod.started += instance.OnRelaod;
+            @Relaod.performed += instance.OnRelaod;
+            @Relaod.canceled += instance.OnRelaod;
         }
 
         private void UnregisterCallbacks(IWalkActions instance)
@@ -487,6 +565,15 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
             @ChangeGunTo3.started -= instance.OnChangeGunTo3;
             @ChangeGunTo3.performed -= instance.OnChangeGunTo3;
             @ChangeGunTo3.canceled -= instance.OnChangeGunTo3;
+            @ChangeGunScroll.started -= instance.OnChangeGunScroll;
+            @ChangeGunScroll.performed -= instance.OnChangeGunScroll;
+            @ChangeGunScroll.canceled -= instance.OnChangeGunScroll;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Relaod.started -= instance.OnRelaod;
+            @Relaod.performed -= instance.OnRelaod;
+            @Relaod.canceled -= instance.OnRelaod;
         }
 
         public void RemoveCallbacks(IWalkActions instance)
@@ -560,6 +647,9 @@ public partial class @PlayerController: IInputActionCollection2, IDisposable
         void OnChangeGunTo1(InputAction.CallbackContext context);
         void OnChangeGunTo2(InputAction.CallbackContext context);
         void OnChangeGunTo3(InputAction.CallbackContext context);
+        void OnChangeGunScroll(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnRelaod(InputAction.CallbackContext context);
     }
     public interface IDefaultActions
     {
