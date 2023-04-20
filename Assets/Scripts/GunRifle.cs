@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
@@ -6,6 +5,7 @@ using TMPro;
 public class GunRifle : MonoBehaviour {
 
     private bool canShoot = true;
+    private bool isReloading;
     
     private float needCooldown = 0.2f;
     private float cooldown = 0.2f;
@@ -20,6 +20,10 @@ public class GunRifle : MonoBehaviour {
     public TextMeshProUGUI ammoText;
     public GameObject reloadingText;
 
+    public float damage = 10f;
+    public LayerMask enemyLayer;
+    public Transform shootPoint;
+    
     private void Awake() {
         ammo = (currentAmmo - 1) % maxAmmo;
         currentAmmo -= maxAmmo;
@@ -42,12 +46,18 @@ public class GunRifle : MonoBehaviour {
 
     public void Shoot() {
         if (cooldown >= needCooldown && ammo > 0 && canShoot) {
+            RaycastHit hit;
+            if (Physics.Raycast(shootPoint.position, shootPoint.transform.forward, out hit, 100f, enemyLayer)) {
+                Damage(hit.transform.gameObject);
+                print(hit.transform.gameObject);
+            }
             shootParticles.Play();
             StartCoroutine(ChangeVisibilityFire());
             ammo -= 1;
             if (ammo == 0 && currentAmmo > 0) {
                 StartCoroutine(Reload());
             }
+
             AfterShoot();
         }
     }
@@ -67,7 +77,8 @@ public class GunRifle : MonoBehaviour {
     }
     
     private IEnumerator Reload() {
-        if (ammo < maxAmmo) {
+        if (ammo < maxAmmo && !isReloading) {
+            isReloading = true;
             reloadingText.SetActive(true);
             canShoot = false;
             yield return new WaitForSeconds(2);
@@ -85,7 +96,12 @@ public class GunRifle : MonoBehaviour {
             }
             reloadingText.SetActive(false);
             canShoot = true;
+            isReloading = false;
         }
+    }
+
+    private void Damage(GameObject enemy) {
+        enemy.GetComponent<Enemy>().TakeDamage(damage);
     }
     
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,7 +17,7 @@ public class PlayerMotor : MonoBehaviour {
 	private float normalSpeed;
 	private Vector3 velocity;
 
-	public static float sens = 50f;
+	public static float sens = 20f;
 	private Vector2 _rotation;
 	[SerializeField] private Camera cam;
 
