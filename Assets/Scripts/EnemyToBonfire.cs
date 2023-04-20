@@ -35,7 +35,7 @@ public class EnemyToBonfire : MonoBehaviour {
 
     private void Hit() {
         cooldown = 0f;
-        bonfire.GetComponent<Bonfire>().TakeHit(damage);
+        bonfire.GetComponent<Bonfire>().TakeDamage(damage);
     }
     
 }
