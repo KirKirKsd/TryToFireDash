@@ -12,6 +12,10 @@ public class EnemyToBonfire : MonoBehaviour {
     public float needCooldown = 1f;
     private float cooldown;
     public float attackRange = 0.1f;
+
+    private void Start() {
+        cooldown = needCooldown;
+    }
     
     private void Update() {
         if (cooldown < needCooldown) {
