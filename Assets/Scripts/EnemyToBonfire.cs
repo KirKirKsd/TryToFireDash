@@ -28,7 +28,7 @@ public class EnemyToBonfire : MonoBehaviour {
             Move();    
         }
         else if (cooldown >= needCooldown) {
-            Hit();
+            Damage();
         }
     }
 
@@ -37,7 +37,7 @@ public class EnemyToBonfire : MonoBehaviour {
         transform.position = new Vector3(moveTo.x, transform.position.y, moveTo.z);
     }
 
-    private void Hit() {
+    private void Damage() {
         cooldown = 0f;
         bonfire.GetComponent<Bonfire>().TakeDamage(damage);
     }

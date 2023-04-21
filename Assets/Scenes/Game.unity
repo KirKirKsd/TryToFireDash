@@ -15769,6 +15769,8 @@ GameObject:
   - component: {fileID: 2112007257}
   - component: {fileID: 2112007255}
   - component: {fileID: 2112007256}
+  - component: {fileID: 2112007259}
+  - component: {fileID: 2112007258}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -15926,6 +15928,30 @@ MonoBehaviour:
   health: 100
   healthTextNumText: {fileID: 1218669406}
   healthBarSlider: {fileID: 953722312}
+--- !u!114 &2112007258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112007249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23b8a5e8cb096b4e8fcd65ed3a17417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2112007259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112007249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23b8a5e8cb096b4e8fcd65ed3a17417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2119020215
 GameObject:
   m_ObjectHideFlags: 0
