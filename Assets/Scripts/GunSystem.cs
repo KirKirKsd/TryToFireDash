@@ -8,6 +8,7 @@ public class GunSystem : MonoBehaviour {
     public int currentGun = 1;
 
     public GunRifle gunRifleScript;
+    public GunPistol gunPistolScript;
 
     private void Start() {
         SetCurrentGun(1);
@@ -18,6 +19,9 @@ public class GunSystem : MonoBehaviour {
             case 1:
                 gunRifleScript.Shoot();
                 break;
+            case 2:
+                gunPistolScript.Shoot();
+                break;
         }
     }
 
@@ -25,6 +29,9 @@ public class GunSystem : MonoBehaviour {
         switch (currentGun) {
             case 1:
                 gunRifleScript.StartReload();
+                break;
+            case 2:
+                gunPistolScript.StartReload();
                 break;
         }
     }

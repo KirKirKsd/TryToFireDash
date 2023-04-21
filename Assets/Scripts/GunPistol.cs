@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class GunRifle : MonoBehaviour {
+public class GunPistol : MonoBehaviour {
 
     private bool canShoot = true;
     private bool isReloading;
     
-    private float needCooldown = 0.2f;
-    private float cooldown = 0.2f;
+    public float needCooldown = 0.2f;
+    private float cooldown;
 
     public int currentAmmo;
     public int maxAmmo;
@@ -28,6 +29,10 @@ public class GunRifle : MonoBehaviour {
         ammo = (currentAmmo - 1) % maxAmmo;
         currentAmmo -= maxAmmo;
         ammo += 1;
+    }
+
+    private void Start() {
+        cooldown = needCooldown;
     }
 
     private void OnEnable() {
