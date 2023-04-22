@@ -15,6 +15,8 @@ public class EnemyToPlayer : MonoBehaviour {
     private float moveCooldown;
 
     private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
+        
         cooldown = needCooldown;
         moveCooldown = needMoveCooldown;
     }

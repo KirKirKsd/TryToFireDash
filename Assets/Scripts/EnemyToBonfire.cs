@@ -14,6 +14,8 @@ public class EnemyToBonfire : MonoBehaviour {
     public float attackRange = 3f;
 
     private void Start() {
+        bonfire = GameObject.FindGameObjectWithTag("Bonfire");
+        
         cooldown = needCooldown;
     }
     

@@ -20,6 +20,9 @@ public class EnemyToBoth : MonoBehaviour {
     private float moveCooldown;
 
     private void Start() {
+        bonfire = GameObject.FindGameObjectWithTag("Bonfire");
+        player = GameObject.FindGameObjectWithTag("Player");
+        
         cooldown = needCooldown;
         moveCooldown = needMoveCooldown;
     }

@@ -11,12 +11,13 @@ public class Waves : MonoBehaviour {
     public List<GameObject> enemiesToPlayer;
     public List<GameObject> enemiesToBoth;
 
-    private List<GameObject> enemiesCanSpawn;
+    private List<GameObject> enemiesCanSpawn = new List<GameObject>();
     private int enemiesOnWave;
     private int enemiesLeft;
-    private int enemiesDefeated = 2f;
+    private int enemiesDefeated;
 
-    public float timeBetweenSpawn;
+    public float timeBetweenSpawn = 2;
+    public float timeBetweenWaves = 10f;
     
     private int randomI;
 
@@ -30,17 +31,18 @@ public class Waves : MonoBehaviour {
         switch (currentWave % 3) {
             case 1:
                 randomI = Random.Range(0, enemiesToPlayer.Count - 1);
-                enemiesCanSpawn.Append(enemiesToPlayer[randomI]);
+                Debug.Log(enemiesToPlayer[0]);
+                enemiesCanSpawn.Add(enemiesToPlayer[0]);
                 enemiesToPlayer.Remove(enemiesToPlayer[randomI]);
                 break;
             case 2:
-                randomI = Random.Range(0, enemiesToBoth.Count - 1);
-                enemiesCanSpawn.Append(enemiesToBoth[randomI]);
+                randomI = Random.Range(0, enemiesToBoth.Count);
+                enemiesCanSpawn.Add(enemiesToBoth[randomI]);
                 enemiesToBoth.Remove(enemiesToBoth[randomI]);
                 break;
             case 0:
-                randomI = Random.Range(0, enemiesToBonfire.Count - 1);
-                enemiesCanSpawn.Append(enemiesToBonfire[randomI]);
+                randomI = Random.Range(0, enemiesToBonfire.Count);
+                enemiesCanSpawn.Add(enemiesToBonfire[randomI]);
                 enemiesToBonfire.Remove(enemiesToBonfire[randomI]);
                 break;
         }
@@ -52,6 +54,9 @@ public class Waves : MonoBehaviour {
             enemiesOnWave = 10 + currentWave;
         }
 
+        enemiesLeft = enemiesOnWave;
+        enemiesDefeated = 0;
+        
         StartCoroutine(DuringWave());
     }
 
@@ -61,8 +66,23 @@ public class Waves : MonoBehaviour {
         enemiesLeft -= 1;
 
         if (enemiesLeft > 0) {
+            print("started");
             yield return new WaitForSeconds(timeBetweenSpawn);
+            print("spawn");
+            StartCoroutine(DuringWave());
         }
-    } 
+    }
+
+    public void EnemyKilled() {
+        enemiesDefeated += 1;
+        if (enemiesDefeated == enemiesOnWave) {
+            StartCoroutine(AfterWave());
+        }
+    }
+
+    private IEnumerator AfterWave() {
+        yield return new WaitForSeconds(timeBetweenWaves);
+        StartWave();
+    }
 
 }
