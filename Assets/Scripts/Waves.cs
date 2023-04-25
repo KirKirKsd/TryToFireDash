@@ -66,9 +66,7 @@ public class Waves : MonoBehaviour {
         enemiesLeft -= 1;
 
         if (enemiesLeft > 0) {
-            print("started");
             yield return new WaitForSeconds(timeBetweenSpawn);
-            print("spawn");
             StartCoroutine(DuringWave());
         }
     }

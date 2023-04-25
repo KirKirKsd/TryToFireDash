@@ -52,7 +52,6 @@ public class GunRifle : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(shootPoint.position, shootPoint.transform.forward, out hit, 100f, enemyLayer)) {
                 Damage(hit.transform.gameObject);
-                print(hit.transform.gameObject);
             }
             shootParticles.Play();
             StartCoroutine(ChangeVisibilityFire());
