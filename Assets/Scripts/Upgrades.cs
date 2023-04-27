@@ -8,6 +8,7 @@ public class Upgrades : MonoBehaviour {
     public Waves wavesScript;
     public Player playerScript;
     public Bonfire bonfireScript;
+    public GunSystem gunSystemScript;
 
     public void CanChoose() {
         UpgradesUI.SetActive(true);
@@ -20,13 +21,18 @@ public class Upgrades : MonoBehaviour {
         playerScript.HealthUpgrade();
     }
 
+    // public void thirdCard() {
+    //     CantChoose();
+    //     bonfireScript.UpgradeHealth();
+    // }
+    
     public void secondCard() {
         
     }
 
     public void thirdCard() {
         CantChoose();
-        bonfireScript.UpgradeHealth();
+        gunSystemScript.UpgradeGuns();
     }
     
     private void CantChoose() {

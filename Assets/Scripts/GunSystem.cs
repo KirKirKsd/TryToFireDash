@@ -35,6 +35,13 @@ public class GunSystem : MonoBehaviour {
                 break;
         }
     }
+
+    public void UpgradeGuns() {
+        gunRifleScript.currentAmmo += 120;
+        gunRifleScript.damage += gunRifleScript.damage * 0.5f;
+        gunPistolScript.currentAmmo += 48;
+        gunPistolScript.damage += gunPistolScript.damage * 0.5f;
+    }
     
     public void SetCurrentGun(int arg) {
         arg = arg switch {

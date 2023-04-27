@@ -4,7 +4,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
     public float health = 30f;
-    public Waves wavesScript;
+    private Waves wavesScript;
 
     public float needCooldown = 1f;
     private float cooldown;
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour {
         health -= damage;
         cooldown = 0f;
         if (health <= 0) { 
-            wavesScript.EnemyKilled(); 
+            wavesScript.EnemyKilled();
             Destroy(gameObject);
         }
     }

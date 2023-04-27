@@ -8732,7 +8732,7 @@ RectTransform:
   m_GameObject: {fileID: 966929551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1882565966}
@@ -15983,7 +15983,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +50% bonfire health
+  m_text: '+50% damage for guns
+
+    +120 ammo for riffle
+
+    +48 ammo for pistol'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37e36b6080bc477438162d51ed907068, type: 2}
   m_sharedMaterial: {fileID: -3732698385021569533, guid: 37e36b6080bc477438162d51ed907068, type: 2}
@@ -17179,7 +17183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bonfire
+  m_text: Guns
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37e36b6080bc477438162d51ed907068, type: 2}
   m_sharedMaterial: {fileID: -3732698385021569533, guid: 37e36b6080bc477438162d51ed907068, type: 2}
@@ -18017,6 +18021,7 @@ MonoBehaviour:
   wavesScript: {fileID: 2112007258}
   playerScript: {fileID: 2112007257}
   bonfireScript: {fileID: 272276558}
+  gunSystemScript: {fileID: 662082822}
 --- !u!1 &2119020215
 GameObject:
   m_ObjectHideFlags: 0
