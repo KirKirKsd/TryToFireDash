@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Waves : MonoBehaviour {
 
@@ -17,33 +18,42 @@ public class Waves : MonoBehaviour {
     private int enemiesDefeated;
 
     public float timeBetweenSpawn = 2;
-    public float timeBetweenWaves = 10f;
+    public Upgrades upgradesScript;
     
     private int randomI;
+
+    public TextMeshProUGUI waveNumTextUI;
+    public Slider waveProgressSliderUI;
+    public TextMeshProUGUI waveProgressTextUI;
 
     private void Start() {
         StartWave();
     }
 
-    private void StartWave() {
+    public void StartWave() {
         currentWave += 1;
 
         switch (currentWave % 3) {
             case 1:
-                randomI = Random.Range(0, enemiesToPlayer.Count - 1);
-                Debug.Log(enemiesToPlayer[0]);
-                enemiesCanSpawn.Add(enemiesToPlayer[0]);
-                enemiesToPlayer.Remove(enemiesToPlayer[randomI]);
+                if (enemiesToPlayer.Count > 0) {
+                    randomI = Random.Range(0, enemiesToPlayer.Count - 1);
+                    enemiesCanSpawn.Add(enemiesToPlayer[0]);
+                    enemiesToPlayer.Remove(enemiesToPlayer[randomI]);
+                }
                 break;
             case 2:
-                randomI = Random.Range(0, enemiesToBoth.Count);
-                enemiesCanSpawn.Add(enemiesToBoth[randomI]);
-                enemiesToBoth.Remove(enemiesToBoth[randomI]);
+                if (enemiesToBoth.Count > 0) {
+                    randomI = Random.Range(0, enemiesToBoth.Count);
+                    enemiesCanSpawn.Add(enemiesToBoth[randomI]);
+                    enemiesToBoth.Remove(enemiesToBoth[randomI]);
+                }
                 break;
             case 0:
-                randomI = Random.Range(0, enemiesToBonfire.Count);
-                enemiesCanSpawn.Add(enemiesToBonfire[randomI]);
-                enemiesToBonfire.Remove(enemiesToBonfire[randomI]);
+                if (enemiesToBonfire.Count > 0) {
+                    randomI = Random.Range(0, enemiesToBonfire.Count);
+                    enemiesCanSpawn.Add(enemiesToBonfire[randomI]);
+                    enemiesToBonfire.Remove(enemiesToBonfire[randomI]);
+                }
                 break;
         }
 
@@ -56,6 +66,10 @@ public class Waves : MonoBehaviour {
 
         enemiesLeft = enemiesOnWave;
         enemiesDefeated = 0;
+
+        waveNumTextUI.text = "Wave: " + currentWave;
+        waveProgressSliderUI.value = (float) enemiesDefeated / enemiesOnWave;
+        waveProgressTextUI.text = enemiesDefeated + "/" + enemiesOnWave;
         
         StartCoroutine(DuringWave());
     }
@@ -73,14 +87,15 @@ public class Waves : MonoBehaviour {
 
     public void EnemyKilled() {
         enemiesDefeated += 1;
+        
+        waveNumTextUI.text = "Wave: " + currentWave;
+        waveProgressSliderUI.value = (float) enemiesDefeated / enemiesOnWave;
+        waveProgressTextUI.text = enemiesDefeated + "/" + enemiesOnWave;
+        
         if (enemiesDefeated == enemiesOnWave) {
-            StartCoroutine(AfterWave());
+            upgradesScript.CanChoose();
         }
     }
-
-    private IEnumerator AfterWave() {
-        yield return new WaitForSeconds(timeBetweenWaves);
-        StartWave();
-    }
+    
 
 }
