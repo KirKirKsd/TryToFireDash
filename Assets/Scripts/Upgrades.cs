@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class Upgrades : MonoBehaviour {
@@ -10,8 +11,15 @@ public class Upgrades : MonoBehaviour {
     public Bonfire bonfireScript;
     public GunSystem gunSystemScript;
 
+    public bool canUpgrade;
+
+    public GameObject setLightPositionUI;
+    public Camera minimapCamera;
+    public GameObject lightGameObject;
+
     public void CanChoose() {
         UpgradesUI.SetActive(true);
+        canUpgrade = true;
         Cursor.visible = true;
         Time.timeScale = 0f;
     }
@@ -27,9 +35,16 @@ public class Upgrades : MonoBehaviour {
     // }
     
     public void secondCard() {
-        
+        setLightPositionUI.SetActive(true);
+        UpgradesUI.SetActive(false);
     }
 
+    public void MouseClicked() {
+        var position = minimapCamera.ScreenToWorldPoint(Input.mousePosition);
+        Instantiate(lightGameObject, new Vector3(position.x - 90f, 0f, position.z - 10f), Quaternion.identity);
+        CantChoose();
+    }
+    
     public void thirdCard() {
         CantChoose();
         gunSystemScript.UpgradeGuns();
@@ -38,6 +53,8 @@ public class Upgrades : MonoBehaviour {
     private void CantChoose() {
         Time.timeScale = 1f;
         UpgradesUI.SetActive(false);
+        setLightPositionUI.SetActive(false);
+        canUpgrade = false;
         wavesScript.StartWave();
         Cursor.visible = false;
     }

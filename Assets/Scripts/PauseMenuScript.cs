@@ -6,6 +6,7 @@ public class PauseMenuScript : MonoBehaviour {
 
 	public GameObject PauseMenuUI;
 	public GameObject SettingsUI;
+	public Upgrades upgradesScript;
 
     private void Start() {
 		Cursor.visible = false;
@@ -25,10 +26,13 @@ public class PauseMenuScript : MonoBehaviour {
 
 	
 	private void Resume() {
+		print("Ad");
 		PauseMenuUI.SetActive(false);
 		SettingsUI.SetActive(false);
-		Cursor.visible = false;
-		Time.timeScale = 1f;
+		if (!upgradesScript.canUpgrade) {
+			Cursor.visible = false;
+			Time.timeScale = 1f;
+		}
     }
 
 	private void Pause() {
