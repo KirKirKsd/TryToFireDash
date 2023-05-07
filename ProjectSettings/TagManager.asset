@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - GunSystem
   - MoveByMouse
+  - Score
   layers:
   - Default
   - TransparentFX

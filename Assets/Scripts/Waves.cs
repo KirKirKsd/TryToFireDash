@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Waves : MonoBehaviour {
 
-    private int currentWave;
+    public int currentWave;
 
     public List<GameObject> enemiesToBonfire;
     public List<GameObject> enemiesToPlayer;

@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  wavesScript: {fileID: 0}
   needCooldown: 1
   canTakeLightDamage: 1
+  cost: 5
 --- !u!114 &5462826354211181932
 MonoBehaviour:
   m_ObjectHideFlags: 0

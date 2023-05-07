@@ -14,8 +14,8 @@ public class Upgrades : MonoBehaviour {
     public bool canUpgrade;
     public GameObject setLightPositionUI;
     
-    private float mapWidthUI = 400f;
-    private float mapHeightUI = 400f;
+    private float mapWidthUI = 360f;
+    private float mapHeightUI = 360f;
     private float mapBorderXUI;
     private float mapBorderYUI;
 

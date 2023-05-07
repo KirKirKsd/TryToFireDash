@@ -9,6 +9,7 @@ public class GunSystem : MonoBehaviour {
 
     public GunRifle gunRifleScript;
     public GunPistol gunPistolScript;
+    public Knife knifeScript;
 
     private void Start() {
         SetCurrentGun(1);
@@ -21,6 +22,9 @@ public class GunSystem : MonoBehaviour {
                 break;
             case 2:
                 gunPistolScript.Shoot();
+                break;
+            case 3:
+                knifeScript.Shoot();
                 break;
         }
     }
