@@ -13,7 +13,7 @@ public class GunPistol : MonoBehaviour {
 
     public int currentAmmo;
     public int maxAmmo;
-    private int ammo;
+    public int ammo;
 
     public ParticleSystem shootParticles;
     public GameObject gunFire;

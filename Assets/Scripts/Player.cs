@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
     public float health = 100f;
-    private float maxHealth;
+    public float maxHealth;
 
     public TextMeshProUGUI healthTextNumText;
     public Slider healthBarSlider;
@@ -25,7 +25,14 @@ public class Player : MonoBehaviour {
         healthTextNumText.text = health + "/" + maxHealth;
     }
 
-    public void HealthUpgrade() {
+    public void Heal() {
+        health = maxHealth;
+        
+        healthBarSlider.value = health / maxHealth;
+        healthTextNumText.text = health + "/" + maxHealth;
+    }
+    
+    public void UpgradeMaxHealth() {
         var per = health / maxHealth;
         maxHealth += Mathf.Round(maxHealth * 0.5f);
         health = Mathf.Round(maxHealth * per);

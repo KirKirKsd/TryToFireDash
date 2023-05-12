@@ -75,7 +75,10 @@ public class Waves : MonoBehaviour {
     }
 
     private IEnumerator DuringWave() {
-        var spawnPoint = new Vector3(Random.Range(-20f, 20f), 1f, Random.Range(-20f, 20f));
+        var spawnPoint = Vector3.zero;
+        while (Vector3.Distance(spawnPoint, Vector3.zero) < 15f) {
+            spawnPoint = new Vector3(Random.Range(-20f, 20f), 1f, Random.Range(-20f, 20f));
+        }
         Instantiate(enemiesCanSpawn[Random.Range(0, enemiesCanSpawn.Count - 1)], spawnPoint, Quaternion.identity);
         enemiesLeft -= 1;
 
