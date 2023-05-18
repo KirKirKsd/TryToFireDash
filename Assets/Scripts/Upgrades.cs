@@ -38,6 +38,9 @@ public class Upgrades : MonoBehaviour {
     private GameObject secondCardWitchSelected;
     private GameObject thirdCardWitchSelected;
 
+    public int shufflesRemaining = 3;
+    public TextMeshProUGUI shufflesRemainingTextUI;
+    
     private void Start() {
         setLightPositionUI.SetActive(true);
         var canvas = setLightPositionUI.GetComponent<Canvas>();
@@ -66,7 +69,16 @@ public class Upgrades : MonoBehaviour {
         Time.timeScale = 0f;
     }   
 
-    public void Randomize() {
+    public void Randomize(int a = 0) {
+        switch (a) {
+            case 1 when shufflesRemaining == 0:
+                return;
+            case 1:
+                shufflesRemaining -= 1;
+                shufflesRemainingTextUI.text = "Remaining: " + shufflesRemaining;
+                break;
+        }
+
         firstCardWitchSelected.SetActive(false);
         secondCardWitchSelected.SetActive(false);
         thirdCardWitchSelected.SetActive(false);
