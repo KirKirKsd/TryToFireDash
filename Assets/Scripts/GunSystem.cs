@@ -10,20 +10,25 @@ public class GunSystem : MonoBehaviour {
     public GunRifle gunRifleScript;
     public GunPistol gunPistolScript;
     public Knife knifeScript;
+    private Shooting shootingScript;
 
     private void Start() {
+        shootingScript = GetComponent<Shooting>();
         SetCurrentGun(1);
     }
 
     public void Shoot() {
         switch (currentGun) {
             case 1:
+                shootingScript.Shoot();
                 gunRifleScript.Shoot();
                 break;
             case 2:
+                shootingScript.Shoot();
                 gunPistolScript.Shoot();
                 break;
             case 3:
+                shootingScript.Shoot();
                 knifeScript.Shoot();
                 break;
         }

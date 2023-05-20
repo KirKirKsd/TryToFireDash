@@ -8,12 +8,12 @@ public class PlayerMotor : MonoBehaviour {
 	private PlayerController.WalkActions walk;
 	private PlayerController.DefaultActions _default;
 		
-	[SerializeField] private Rigidbody rb;
+	public Rigidbody rb;
 	public Flashlight flashlightScript;
 	public PauseMenuScript pauseMenuScript;
 	public GunSystem gunSystemScript;
 
-	private float speed = 2f;
+	[HideInInspector] public float speed = 2f;
 	private float normalSpeed;
 	private Vector3 velocity;
 
