@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Bonfire : MonoBehaviour {
@@ -10,7 +11,11 @@ public class Bonfire : MonoBehaviour {
     public TextMeshProUGUI healthTextNumText;
     public Slider healthBarSlider;
 
+    public Score scoreScript;
+
     private void Start() {
+        health += PlayerPrefs.GetInt("upgradeLvlBonfire") * 40;
+        
         maxHealth = health;
         
         healthBarSlider.value = health / maxHealth;
@@ -19,7 +24,12 @@ public class Bonfire : MonoBehaviour {
 
     public void TakeDamage(float damage) {
         health -= damage;
-            
+
+        if (health <= 0) {
+            health = 0;
+            Death();
+        }
+        
         healthBarSlider.value = health / maxHealth;
         healthTextNumText.text = health + "/" + maxHealth;
     }
@@ -43,7 +53,12 @@ public class Bonfire : MonoBehaviour {
         healthBarSlider.value = health / maxHealth;
         healthTextNumText.text = health + "/" + maxHealth;
         
-        GetComponent<Light>().AddDamage();
+        GetComponentInChildren<Light>().AddDamage();
     }
 
+    public void Death() {
+        PlayerPrefs.SetInt("LastScore", scoreScript.score);
+        SceneManager.LoadScene(2);
+    }
+    
 }

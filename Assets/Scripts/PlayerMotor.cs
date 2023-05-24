@@ -5,7 +5,7 @@ using TMPro;
 public class PlayerMotor : MonoBehaviour {
 
 	private PlayerController _controller;
-	private PlayerController.WalkActions walk;
+	public PlayerController.WalkActions walk;
 	private PlayerController.DefaultActions _default;
 		
 	public Rigidbody rb;

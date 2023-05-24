@@ -115,7 +115,7 @@ public class Upgrades : MonoBehaviour {
     public void UpgradeLights() {
         CantChoose();
         foreach (var obj in GameObject.FindGameObjectsWithTag("Light")) {
-            obj.GetComponent<Light>().AddDamage();
+            obj.GetComponentInChildren<Light>().AddDamage();
         }
     }
     
@@ -123,6 +123,7 @@ public class Upgrades : MonoBehaviour {
         setLightPositionUI.SetActive(true);
         Instantiate(torchPrefab, Vector3.zero, Quaternion.identity);
         lightGameObject = GameObject.FindGameObjectWithTag("MoveByMouse");
+        lightGameObject.GetComponentInChildren<Light>().waveAlive = 4;
         setLightPositionNameTextUI.text = "Torch";
         foreach (var btn in setLightPositionButtonsUI) {
             btn.GetComponent<Button>().interactable = false;
@@ -134,6 +135,7 @@ public class Upgrades : MonoBehaviour {
         setLightPositionUI.SetActive(true);
         Instantiate(lampPrefab, Vector3.zero, Quaternion.identity);
         lightGameObject = GameObject.FindGameObjectWithTag("MoveByMouse");
+        SetSize(10);
         setLightPositionNameTextUI.text = "Lamp";
         foreach (var btn in setLightPositionButtonsUI) {
             btn.GetComponent<Button>().interactable = true;
@@ -142,8 +144,6 @@ public class Upgrades : MonoBehaviour {
     }
 
     public void SetSize(float size) {
-        print(lightGameObject);
-        print(lightGameObject.GetComponent<Light>());
         lightGameObject.GetComponentInChildren<Light>().SetSize(size);
     }
     

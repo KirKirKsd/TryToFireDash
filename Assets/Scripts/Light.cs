@@ -5,7 +5,23 @@ public class Light : MonoBehaviour {
 
     public float damage = 3f;
     public bool canChangeSize;
+    public bool isBonfire;
     public UnityEngine.Light pointLight;
+
+    private int waveEntry;
+    [HideInInspector] public int waveAlive;
+    private Waves wavesScript;
+
+    private void Start() {
+        wavesScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Waves>();
+        waveEntry = wavesScript.currentWave;
+    }
+
+    private void Update() {
+        if (wavesScript.currentWave == waveEntry + waveAlive + 1 && !isBonfire) {
+            Destroy(transform.parent.gameObject);
+        }
+    }
 
     private void OnTriggerStay(Collider other) {
         if (other.CompareTag("Enemy")) {
@@ -16,6 +32,12 @@ public class Light : MonoBehaviour {
     public void SetSize(float size) {
         if (canChangeSize) {
             pointLight.range = size;
+            waveAlive = size switch {
+                5 => 5,
+                10 => 3,
+                15 => 1,
+                _ => waveAlive
+            };
         }
     }
     

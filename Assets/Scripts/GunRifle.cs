@@ -7,7 +7,7 @@ public class GunRifle : MonoBehaviour {
     private bool canShoot = true;
     private bool isReloading;
     
-    private float needCooldown = 0.2f;
+    public float needCooldown = 0.2f;
     private float cooldown = 0.2f;
 
     public int currentAmmo;
@@ -24,7 +24,7 @@ public class GunRifle : MonoBehaviour {
     public LayerMask enemyLayer;
     public Transform shootPoint;
     
-    private void Awake() {
+    public void AmmoAwake() {
         ammo = (currentAmmo - 1) % maxAmmo;
         currentAmmo -= maxAmmo;
         ammo += 1;

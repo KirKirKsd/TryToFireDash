@@ -26,7 +26,6 @@ public class PauseMenuScript : MonoBehaviour {
 
 	
 	private void Resume() {
-		print("Ad");
 		PauseMenuUI.SetActive(false);
 		SettingsUI.SetActive(false);
 		if (!upgradesScript.canUpgrade) {
