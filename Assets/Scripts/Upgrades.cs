@@ -124,7 +124,7 @@ public class Upgrades : MonoBehaviour {
         setLightPositionUI.SetActive(true);
         Instantiate(torchPrefab, Vector3.zero, Quaternion.identity);
         lightGameObject = GameObject.FindGameObjectWithTag("MoveByMouse");
-        lightGameObject.GetComponentInChildren<Light>().waveAlive = 4;
+        lightGameObject.GetComponentInChildren<Light>().waveAlive = 15;
         setLightPositionNameTextUI.text = "Torch";
         foreach (var btn in setLightPositionButtonsUI) {
             btn.GetComponent<Button>().interactable = false;

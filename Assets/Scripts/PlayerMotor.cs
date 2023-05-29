@@ -35,6 +35,8 @@ public class PlayerMotor : MonoBehaviour {
 
 	public Animator flashlightAnimator;
 
+	private float otd;
+
 	private void Awake() {
 		Cursor.visible = false;
 		
@@ -75,7 +77,9 @@ public class PlayerMotor : MonoBehaviour {
 		Movement();
 		
 		if (walk.Shoot.ReadValue<float>() > 0.1f) Shoot();
-		
+
+		MinOtd();
+
 		flashlightAnimator.SetBool("isWalk", speed == 2);
 		flashlightAnimator.SetBool("isRun", speed == 4);
 		
@@ -99,7 +103,7 @@ public class PlayerMotor : MonoBehaviour {
 		_rotation.y -= input.y * sens * 0.2f * Time.deltaTime;
 		_rotation.y = Mathf.Clamp(_rotation.y, -60f, 60f);
 		_rotation.x += input.x * sens * 0.2f * Time.deltaTime;
-
+		
 		transform.localRotation = Quaternion.Euler(0f, _rotation.x, 0f);
 		cam.transform.localRotation = Quaternion.Euler(_rotation.y, 0f, 0f); 
 	}
@@ -146,6 +150,20 @@ public class PlayerMotor : MonoBehaviour {
 
 	private void Shoot() {
 		gunSystemScript.Shoot();
+	}
+
+	public void AddOtd(float dOtd) {
+		otd += dOtd;
+		print(dOtd);
+		_rotation.y -= otd;
+	}
+
+	private void MinOtd() {
+		if (otd > 0) {
+			otd -= Time.deltaTime * 5;
+			_rotation.y += Time.deltaTime * 5;
+		}
+		if (otd < 0) otd = 0;
 	}
 	
 	private void ChangeGun() {

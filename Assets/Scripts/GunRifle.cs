@@ -23,6 +23,8 @@ public class GunRifle : MonoBehaviour {
     public float damage = 10f;
     public LayerMask enemyLayer;
     public Transform shootPoint;
+
+    public float otd = 0.1f;
     
     public void AmmoAwake() {
         ammo = (currentAmmo - 1) % maxAmmo;
@@ -55,6 +57,7 @@ public class GunRifle : MonoBehaviour {
                 Damage(hit.transform.gameObject);
             }
             shootParticles.Play();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().AddOtd(otd);
             StartCoroutine(ChangeVisibilityFire());
             ammo -= 1;
             if (ammo == 0 && currentAmmo > 0) {

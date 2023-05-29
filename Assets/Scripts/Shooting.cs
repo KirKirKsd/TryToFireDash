@@ -5,7 +5,7 @@ public class Shooting : MonoBehaviour {
 
     private float spray;
     private float minSpray = 0.25f;
-    private float maxSpray = 5f;
+    private float maxSpray = 4f;
 
     public Transform shootPoint;
 

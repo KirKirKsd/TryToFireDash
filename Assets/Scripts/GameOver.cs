@@ -15,12 +15,11 @@ public class GameOver : MonoBehaviour {
     private void Start() {
         Cursor.visible = true;
         score = PlayerPrefs.GetInt("LastScore");
-        print(score);
         money = score / 10;
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + money);
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (tempScore < score) {
             tempScore += 1;
             scoreText.text = tempScore.ToString();

@@ -33,9 +33,9 @@ public class Light : MonoBehaviour {
         if (canChangeSize) {
             pointLight.range = size;
             waveAlive = size switch {
-                5 => 5,
-                10 => 3,
-                15 => 1,
+                5 => 20,
+                10 => 10,
+                15 => 5,
                 _ => waveAlive
             };
         }

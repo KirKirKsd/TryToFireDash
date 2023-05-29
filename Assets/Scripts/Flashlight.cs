@@ -11,7 +11,7 @@ public class Flashlight : MonoBehaviour {
 
     private float cooldown;
     private float maxCooldown = 5f;
-    private float speed = 2f;
+    private float speed = 0.5f;
 
     public Slider powerSliderUI;
 
