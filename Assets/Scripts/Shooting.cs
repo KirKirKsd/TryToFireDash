@@ -33,19 +33,22 @@ public class Shooting : MonoBehaviour {
             spray = maxSpray;
         }
 
-        var xmn = playerMotor.speed / 2;
-
-        pointUp.localPosition = Vector3.up * (spray * 30 * xmn);
-        pointRight.localPosition = Vector3.right * (spray * 30 * xmn);
-        pointDown.localPosition = Vector3.down * (spray * 30 * xmn);
-        pointLeft.localPosition = Vector3.left * (spray * 30 * xmn);
+        var xmn = playerMotor.speed;
+        if (xmn == 0) xmn = 1;
+        
+        pointUp.localPosition = Vector3.up * (spray * 20 * xmn);
+        pointRight.localPosition = Vector3.right * (spray * 20 * xmn);
+        pointDown.localPosition = Vector3.down * (spray * 20 * xmn);
+        pointLeft.localPosition = Vector3.left * (spray * 20 * xmn);
     }
 
     public void Shoot() {
         var axisY = Random.Range(-spray, spray);
         var axisX = Random.Range(-spray, spray);
-        axisX *= playerMotor.speed / 2;
-        axisY *= playerMotor.speed / 2;
+        var xmn = playerMotor.speed;
+        if (xmn == 0) xmn = 1;
+        axisX *= xmn;
+        axisY *= xmn;
         shootPoint.localRotation = Quaternion.Euler(axisX, axisY, 0f);
         spray += 0.05f;
     }

@@ -34,6 +34,7 @@ public class GunRifle : MonoBehaviour {
         reloadingText.SetActive(false);
         canShoot = true;
         isReloading = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Enable();
         if (ammo == 0 && currentAmmo > 0) {
             StartCoroutine(Reload());
         }
@@ -83,6 +84,7 @@ public class GunRifle : MonoBehaviour {
             isReloading = true;
             reloadingText.SetActive(true);
             canShoot = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Disable();
             yield return new WaitForSeconds(2);
             if (currentAmmo >= maxAmmo && ammo == 0) {
                 ammo = maxAmmo;
@@ -98,6 +100,7 @@ public class GunRifle : MonoBehaviour {
             }
             reloadingText.SetActive(false);
             canShoot = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Enable();
             isReloading = false;
         }
     }

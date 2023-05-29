@@ -65,6 +65,7 @@ public class Upgrades : MonoBehaviour {
         UpgradesUI.SetActive(true);
         Randomize();
         canUpgrade = true;
+        GetComponent<PlayerMotor>().walk.Disable();
         Cursor.visible = true;
         Time.timeScale = 0f;
     }   
@@ -164,6 +165,7 @@ public class Upgrades : MonoBehaviour {
         canUpgrade = false;
         isSecondUpgrade = false;
         wavesScript.StartWave();
+        GetComponent<PlayerMotor>().walk.Enable();
         Cursor.visible = false;
     }
 

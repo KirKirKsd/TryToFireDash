@@ -33,6 +33,8 @@ public class PlayerMotor : MonoBehaviour {
 	public Slider staminaSlider;
 	public TextMeshProUGUI speedTextUI;
 
+	public Animator flashlightAnimator;
+
 	private void Awake() {
 		Cursor.visible = false;
 		
@@ -70,21 +72,22 @@ public class PlayerMotor : MonoBehaviour {
 	private void Update() {
 		SetUI();
 		Sprint(walk.Sprint.ReadValue<float>() > 0.1f && (Mathf.Abs(velocity.x) > 0.1f || Mathf.Abs(velocity.z) > 0.1f));
-		if (walk.Shoot.ReadValue<float>() > 0.1f) {
-			Shoot();
-		}
+		Movement();
+		
+		if (walk.Shoot.ReadValue<float>() > 0.1f) Shoot();
+		
+		flashlightAnimator.SetBool("isWalk", speed == 2);
+		flashlightAnimator.SetBool("isRun", speed == 4);
+		
 		ChangeGun();
 	}
-
-	private void FixedUpdate() {
-		Movement();
-	}
-
+	
 	private void LateUpdate() {
 		Look();
 	}
 
 	private void Movement() {
+		if (Mathf.Abs(walk.Movement.ReadValue<Vector2>().x) < 0.1f && Mathf.Abs(walk.Movement.ReadValue<Vector2>().y) < 0.1f) speed = 0;
 		var input = walk.Movement.ReadValue<Vector2>() * speed;
 		velocity = transform.TransformDirection(input.x, rb.velocity.y, input.y);
 		rb.velocity = velocity;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour {
 
@@ -7,9 +8,11 @@ public class PauseMenuScript : MonoBehaviour {
 	public GameObject PauseMenuUI;
 	public GameObject SettingsUI;
 	public Upgrades upgradesScript;
+	private PlayerMotor playerMotorScript;
 
     private void Start() {
 		Cursor.visible = false;
+		playerMotorScript = GetComponent<PlayerMotor>();
     }
 
     public void Switch() {
@@ -29,6 +32,7 @@ public class PauseMenuScript : MonoBehaviour {
 		PauseMenuUI.SetActive(false);
 		SettingsUI.SetActive(false);
 		if (!upgradesScript.canUpgrade) {
+			playerMotorScript.walk.Enable();
 			Cursor.visible = false;
 			Time.timeScale = 1f;
 		}
@@ -36,6 +40,7 @@ public class PauseMenuScript : MonoBehaviour {
 
 	private void Pause() {
 		PauseMenuUI.SetActive(true);
+		playerMotorScript.walk.Disable();
 		Cursor.visible = true;
 		Time.timeScale = 0f;
     }
@@ -44,12 +49,16 @@ public class PauseMenuScript : MonoBehaviour {
 		PauseMenuUI.SetActive(false);
 		SettingsUI.SetActive(true);
     }
-
+	
 	public void BackToPause() {
 		PauseMenuUI.SetActive(true);
 		SettingsUI.SetActive(false);
 	}
 
+	public void Menu() {
+		GameObject.FindGameObjectWithTag("Bonfire").GetComponent<Bonfire>().Death();
+	}
+	
 	public void Exit() {
 		Application.Quit();
     }
