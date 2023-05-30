@@ -34,6 +34,7 @@ public class PlayerMotor : MonoBehaviour {
 	public TextMeshProUGUI speedTextUI;
 
 	public Animator flashlightAnimator;
+	public Animator rightHandAnimator;
 
 	private float otd;
 
@@ -82,6 +83,8 @@ public class PlayerMotor : MonoBehaviour {
 
 		flashlightAnimator.SetBool("isWalk", speed == 2);
 		flashlightAnimator.SetBool("isRun", speed == 4);
+		rightHandAnimator.SetBool("isWalk", speed == 2);
+		rightHandAnimator.SetBool("isRun", speed == 4);
 		
 		ChangeGun();
 	}

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GunSystem : MonoBehaviour {
@@ -13,6 +14,9 @@ public class GunSystem : MonoBehaviour {
     private Shooting shootingScript;
     public Transform shootPoint;
 
+    public Animator riffleAnimator;
+    public Animator knifeAnimator;
+    
     private Weapon riffle1 = new();
     private Weapon riffle2 = new();
 
@@ -54,6 +58,7 @@ public class GunSystem : MonoBehaviour {
             case 1:
                 shootingScript.Shoot();
                 gunRifleScript.Shoot();
+                StartCoroutine(AnimationRiffle());
                 break;
             case 2:
                 shootingScript.Shoot();
@@ -62,6 +67,7 @@ public class GunSystem : MonoBehaviour {
             case 3:
                 shootPoint.localRotation = Quaternion.identity;
                 knifeScript.Shoot();
+                StartCoroutine(AnimationKnife());
                 break;
         }
     }
@@ -116,4 +122,16 @@ public class GunSystem : MonoBehaviour {
         }
     }
 
+    private IEnumerator AnimationRiffle() {
+        riffleAnimator.SetBool("isShooting", true);
+        yield return new WaitForFixedUpdate();
+        riffleAnimator.SetBool("isShooting", false);
+    }
+
+    private IEnumerator AnimationKnife() {
+        knifeAnimator.SetBool("isShooting", true);
+        yield return new WaitForFixedUpdate();
+        knifeAnimator.SetBool("isShooting", false);
+    }
+    
 }

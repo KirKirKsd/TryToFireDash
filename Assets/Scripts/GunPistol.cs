@@ -25,6 +25,8 @@ public class GunPistol : MonoBehaviour {
     public LayerMask enemyLayer;
     public Transform shootPoint;
     
+    private Animator pistolAnimator;
+    
     private void Awake() {
         ammo = (currentAmmo - 1) % maxAmmo;
         currentAmmo -= maxAmmo;
@@ -32,6 +34,7 @@ public class GunPistol : MonoBehaviour {
     }
 
     private void Start() {
+        pistolAnimator = GetComponent<Animator>();
         cooldown = needCooldown;
     }
 
@@ -60,6 +63,7 @@ public class GunPistol : MonoBehaviour {
                 Damage(hit.transform.gameObject);
             }
             shootParticles.Play();
+            StartCoroutine(AnimationPistol());
             StartCoroutine(ChangeVisibilityFire());
             ammo -= 1;
             if (ammo == 0 && currentAmmo > 0) {
@@ -112,6 +116,12 @@ public class GunPistol : MonoBehaviour {
 
     private void Damage(GameObject enemy) {
         enemy.GetComponent<Enemy>().TakeDamage(damage);
+    }
+ 
+    private IEnumerator AnimationPistol() {
+        pistolAnimator.SetBool("isShooting", true);
+        yield return new WaitForFixedUpdate();
+        pistolAnimator.SetBool("isShooting", false);
     }
     
 }
