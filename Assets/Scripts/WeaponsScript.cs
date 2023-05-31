@@ -8,6 +8,7 @@ public class Weapon {
     public int ammo;
     public int magAmmo;
     public float needCooldown;
+    public float otd;
 
 }
 

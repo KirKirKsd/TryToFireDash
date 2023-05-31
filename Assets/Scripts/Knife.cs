@@ -14,6 +14,9 @@ public class Knife : MonoBehaviour {
     public LayerMask enemyLayer;
     public Transform shootPoint;
 
+    public GameObject sound;
+    public GameObject damageSound;
+
     private void OnEnable() {
         reloadingText.SetActive(false);
         ammoText.text = " / ";
@@ -28,9 +31,10 @@ public class Knife : MonoBehaviour {
     public void Shoot() {
         if (cooldown >= needCooldown) {
             RaycastHit hit;
+            Instantiate(sound);
             if (Physics.Raycast(shootPoint.position, shootPoint.transform.forward, out hit, 2f, enemyLayer)) {
                 Damage(hit.transform.gameObject);
-                print(hit);
+                Instantiate(damageSound);
             }
 
             AfterShoot();

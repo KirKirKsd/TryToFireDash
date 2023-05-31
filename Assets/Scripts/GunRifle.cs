@@ -26,6 +26,10 @@ public class GunRifle : MonoBehaviour {
 
     public float otd = 0.1f;
     
+    public Animator riffleAnimator;
+    public GameObject sound;
+    public GameObject reloadSound;
+    
     public void AmmoAwake() {
         ammo = (currentAmmo - 1) % maxAmmo;
         currentAmmo -= maxAmmo;
@@ -57,6 +61,8 @@ public class GunRifle : MonoBehaviour {
                 Damage(hit.transform.gameObject);
             }
             shootParticles.Play();
+            Instantiate(sound);
+            StartCoroutine(AnimationRiffle());
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().AddOtd(otd);
             StartCoroutine(ChangeVisibilityFire());
             ammo -= 1;
@@ -87,7 +93,9 @@ public class GunRifle : MonoBehaviour {
             isReloading = true;
             reloadingText.SetActive(true);
             canShoot = false;
+            Instantiate(reloadSound);
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Disable();
+            riffleAnimator.SetBool("isReloading", true);
             yield return new WaitForSeconds(2);
             if (currentAmmo >= maxAmmo && ammo == 0) {
                 ammo = maxAmmo;
@@ -105,11 +113,18 @@ public class GunRifle : MonoBehaviour {
             canShoot = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Enable();
             isReloading = false;
+            riffleAnimator.SetBool("isReloading", false);
         }
     }
 
     private void Damage(GameObject enemy) {
         enemy.GetComponent<Enemy>().TakeDamage(damage);
+    }
+    
+    private IEnumerator AnimationRiffle() {
+        riffleAnimator.SetBool("isShooting", true);
+        yield return new WaitForFixedUpdate();
+        riffleAnimator.SetBool("isShooting", false);
     }
     
 }

@@ -243,6 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1789186803}
   moneyText: {fileID: 1092769172}
+  skipButtonUI: {fileID: 770845720}
 --- !u!1 &353803776
 GameObject:
   m_ObjectHideFlags: 0

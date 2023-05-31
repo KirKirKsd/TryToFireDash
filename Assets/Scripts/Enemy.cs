@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour {
     public bool canTakeLightDamage;
     public int cost;
 
+    public GameObject deathSound;
+
     private void Start() {
         cooldown = needCooldown;
         wavesScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Waves>();
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour {
         cooldown = 0f;
         if (health <= 0) { 
             Destroy(gameObject);
+            Instantiate(deathSound);
             wavesScript.EnemyKilled();
             scoreScript.AddScore(cost * wavesScript.currentWave);
         }

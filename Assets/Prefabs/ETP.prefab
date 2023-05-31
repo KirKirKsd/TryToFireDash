@@ -117,6 +117,7 @@ MonoBehaviour:
   needCooldown: 1
   canTakeLightDamage: 1
   cost: 1
+  deathSound: {fileID: 1558500758762194633, guid: d21430ff49461dc449c74ee1664896a5, type: 3}
 --- !u!114 &8215735735350401362
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class GunPistol : MonoBehaviour {
     public Transform shootPoint;
     
     private Animator pistolAnimator;
+    public GameObject sound;
+    public GameObject reloadSound;
     
     private void Awake() {
         ammo = (currentAmmo - 1) % maxAmmo;
@@ -63,6 +65,7 @@ public class GunPistol : MonoBehaviour {
                 Damage(hit.transform.gameObject);
             }
             shootParticles.Play();
+            Instantiate(sound);
             StartCoroutine(AnimationPistol());
             StartCoroutine(ChangeVisibilityFire());
             ammo -= 1;
@@ -93,7 +96,9 @@ public class GunPistol : MonoBehaviour {
             isReloading = true;
             reloadingText.SetActive(true);
             canShoot = false;
+            Instantiate(reloadSound);
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Disable();
+            pistolAnimator.SetBool("isReloading", true);
             yield return new WaitForSeconds(2);
             if (currentAmmo >= maxAmmo && ammo == 0) {
                 ammo = maxAmmo;
@@ -110,6 +115,7 @@ public class GunPistol : MonoBehaviour {
             reloadingText.SetActive(false);
             canShoot = true;
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().walk.Shoot.Enable();
+            pistolAnimator.SetBool("isReloading", false);
             isReloading = false;
         }
     }

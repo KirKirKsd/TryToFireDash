@@ -11,6 +11,7 @@ public class GameOver : MonoBehaviour {
     private int tempScore;
     private int money;
     private int tempMoney;
+    public GameObject skipButtonUI;
 
     private void Start() {
         Cursor.visible = true;
@@ -31,6 +32,10 @@ public class GameOver : MonoBehaviour {
                 moneyText.text = "+" + tempMoney;
             }
         }
+
+        if (money == tempMoney) {
+            skipButtonUI.SetActive(false);
+        } 
     }
 
     public void ToMenu() {
@@ -38,6 +43,7 @@ public class GameOver : MonoBehaviour {
     }
 
     public void Skip() {
+        skipButtonUI.SetActive(false);
         tempScore = score;
         scoreText.text = tempScore.ToString();
         tempMoney = money;

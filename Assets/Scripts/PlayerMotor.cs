@@ -39,6 +39,7 @@ public class PlayerMotor : MonoBehaviour {
 	private float otd;
 
 	private void Awake() {
+		Time.timeScale = 1f;
 		Cursor.visible = false;
 		
 		_controller = new PlayerController();
@@ -157,7 +158,6 @@ public class PlayerMotor : MonoBehaviour {
 
 	public void AddOtd(float dOtd) {
 		otd += dOtd;
-		print(dOtd);
 		_rotation.y -= otd;
 	}
 

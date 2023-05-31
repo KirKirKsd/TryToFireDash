@@ -40,7 +40,7 @@ public class Shop : MonoBehaviour {
             upgradeLvlBonfireDone.SetActive(true);
         }
 
-        gunEquipped = PlayerPrefs.GetInt("gunEquipped");
+        gunEquipped = PlayerPrefs.GetInt("ChooseWeapon");
         riffle2Bought = PlayerPrefs.GetInt("riffle2Bought");
 
         if (gunEquipped == 0) {

@@ -13,12 +13,17 @@ public class GunSystem : MonoBehaviour {
     public Knife knifeScript;
     private Shooting shootingScript;
     public Transform shootPoint;
-
-    public Animator riffleAnimator;
+    
     public Animator knifeAnimator;
     
     private Weapon riffle1 = new();
     private Weapon riffle2 = new();
+
+    public GameObject riffle1GO;
+    public GameObject riffle2GO;
+
+    public GameObject soundRiffle1;
+    public GameObject soundRiffle2;
 
     private void Awake() {
         shootingScript = GetComponent<Shooting>();
@@ -27,11 +32,13 @@ public class GunSystem : MonoBehaviour {
         riffle1.ammo = 90;
         riffle1.magAmmo = 30;
         riffle1.needCooldown = 0.2f;
+        riffle1.otd = 1.2f;
 
         riffle2.damage = 15;
         riffle2.ammo = 60;
         riffle2.magAmmo = 20;
         riffle2.needCooldown = 0.5f;
+        riffle2.otd = 2;
         
         var gun1Script = GetComponentInChildren<GunRifle>();
         if (PlayerPrefs.GetInt("ChooseWeapon") == 0) {
@@ -39,12 +46,18 @@ public class GunSystem : MonoBehaviour {
             gun1Script.currentAmmo = riffle1.ammo;
             gun1Script.maxAmmo = riffle1.magAmmo;
             gun1Script.needCooldown = riffle1.needCooldown;
+            gun1Script.otd = riffle1.otd;
+            riffle2GO.SetActive(false);
+            gun1Script.sound = soundRiffle1;
         }
         else if (PlayerPrefs.GetInt("ChooseWeapon") == 1) {
             gun1Script.damage = riffle2.damage;
             gun1Script.currentAmmo = riffle2.ammo;
             gun1Script.maxAmmo = riffle2.magAmmo;
             gun1Script.needCooldown = riffle2.needCooldown;
+            gun1Script.otd = riffle2.otd;
+            riffle1GO.SetActive(false);
+            gun1Script.sound = soundRiffle2;
         }
         gun1Script.AmmoAwake();
     }
@@ -58,7 +71,6 @@ public class GunSystem : MonoBehaviour {
             case 1:
                 shootingScript.Shoot();
                 gunRifleScript.Shoot();
-                StartCoroutine(AnimationRiffle());
                 break;
             case 2:
                 shootingScript.Shoot();
@@ -120,12 +132,6 @@ public class GunSystem : MonoBehaviour {
                 gun3.SetActive(true);
                 break;
         }
-    }
-
-    private IEnumerator AnimationRiffle() {
-        riffleAnimator.SetBool("isShooting", true);
-        yield return new WaitForFixedUpdate();
-        riffleAnimator.SetBool("isShooting", false);
     }
 
     private IEnumerator AnimationKnife() {
