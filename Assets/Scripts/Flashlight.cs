@@ -33,7 +33,6 @@ public class Flashlight : MonoBehaviour {
         }
         else {
             if (!isDisable && cooldown <= 0) {
-                print("asd");
                 Instantiate(disableSound);
                 isDisable = true;
             }

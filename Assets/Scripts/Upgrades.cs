@@ -136,7 +136,7 @@ public class Upgrades : MonoBehaviour {
         setLightPositionUI.SetActive(true);
         Instantiate(lampPrefab, Vector3.zero, Quaternion.identity);
         lightGameObject = GameObject.FindGameObjectWithTag("MoveByMouse");
-        SetSize(10);
+        SetSize(13);
         setLightPositionNameTextUI.text = "Lamp";
         foreach (var btn in setLightPositionButtonsUI) {
             btn.GetComponent<Button>().interactable = true;

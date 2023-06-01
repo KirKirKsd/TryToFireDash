@@ -38,6 +38,9 @@ public class PlayerMotor : MonoBehaviour {
 
 	private float otd;
 
+	public GameObject stepsSound;
+	public GameObject fastStepsSound;
+
 	private void Awake() {
 		Time.timeScale = 1f;
 		Cursor.visible = false;
@@ -45,7 +48,7 @@ public class PlayerMotor : MonoBehaviour {
 		_controller = new PlayerController();
 		walk = _controller.Walk;
 		_default = _controller.Default;
-		walk.Jump.performed += _ => Jump();
+		// walk.Jump.performed += _ => Jump();
 
 		walk.Flashlight.performed += _ => flashlightScript.SwitchPower();
 		_default.Pause.performed += _ => pauseMenuScript.Switch();
@@ -77,7 +80,10 @@ public class PlayerMotor : MonoBehaviour {
 		SetUI();
 		Sprint(walk.Sprint.ReadValue<float>() > 0.1f && (Mathf.Abs(velocity.x) > 0.1f || Mathf.Abs(velocity.z) > 0.1f));
 		Movement();
-		
+
+		stepsSound.SetActive(speed == 2);
+		fastStepsSound.SetActive(speed == 4);
+
 		if (walk.Shoot.ReadValue<float>() > 0.1f) Shoot();
 
 		MinOtd();

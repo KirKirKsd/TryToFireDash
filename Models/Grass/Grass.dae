@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+<asset>
+<contributor>
+<author>VoxelShop User</author>
+<authoring_tool>VoxelShop V1.8.26
+</authoring_tool>
+</contributor>
+<created>2023-05-31T16:03:48</created>
+<modified>2023-05-31T16:03:48</modified>
+<unit meter="1" name="meter"/>
+<up_axis>Z_UP</up_axis>
+</asset>
+<library_images>
+<image id="Grass_texture0-image" name="Grass_texture0-image">
+<init_from>file://Grass_texture0.png</init_from>
+</image>
+</library_images>
+<library_effects>
+<effect id="lambert0-fx">
+<profile_COMMON>
+<newparam sid="Grass_texture0-surface">
+<surface type="2D">
+<init_from>Grass_texture0-image</init_from>
+</surface>
+</newparam>
+<newparam sid="Grass_texture0-sampler">
+<sampler2D>
+<source>Grass_texture0-surface</source>
+<wrap_s>WRAP</wrap_s>
+<wrap_t>WRAP</wrap_t>
+<minfilter>NEAREST</minfilter>
+<magfilter>NEAREST</magfilter>
+</sampler2D>
+</newparam>
+<technique sid="common">
+<lambert>
+<emission>
+<color>0 0 0 1</color>
+</emission>
+<ambient>
+<color>0 0 0 1</color>
+</ambient>
+<diffuse>
+<texture texcoord="TEX0" texture="Grass_texture0-sampler"/>
+</diffuse>
+</lambert>
+</technique>
+</profile_COMMON>
+</effect>
+</library_effects>
+<library_materials>
+<material id="lambert0-material" name="lambert0">
+<instance_effect url="#lambert0-fx"/>
+</material>
+</library_materials>
+<library_geometries>
+<geometry id="Plane-tex-mesh-0" name="Plane-tex">
+<mesh>
+<source id="Plane-tex-mesh-0-positions">
+<float_array count="24" id="Plane-tex-mesh-0-positions-array">-9 -9 1 -9 9 -1 -9 -9 -1 -9 9 1 9 -9 1 9 9 -1 9 -9 -1 9 9 1</float_array>
+<technique_common>
+<accessor count="8" source="#Plane-tex-mesh-0-positions-array" stride="3">
+<param name="X" type="float"/>
+<param name="Y" type="float"/>
+<param name="Z" type="float"/>
+</accessor>
+</technique_common>
+</source>
+<source id="Plane-tex-mesh-0-uvs">
+<float_array count="60" id="Plane-tex-mesh-0-uvs-array">0.37502357 0.62502897 0.4062382 0.9061921 0.4062382 0.62502897 0.3750118 0.6250579 0.3750118 0.90622103 0.40622643 0.90622103 0.46877357 0.62502897 0.4999882 0.9061921 0.4999882 0.62502897 0.4687618 0.6250579 0.4687618 0.90622103 0.49997643 0.90622103 0.0937942 0.6250221 0.37497792 0.90620583 0.37497792 0.6250221 0.0312721 0.65629417 0.0312721 0.9374779 0.3124558 0.9374779 0.49998483 0.87494534 0.46878034 0.7812773 0.49998483 0.7812773 0.49996966 0.8749727 0.46876517 0.8749727 0.46876517 0.78130466 0.03130788 0.9375118 0.31247106 0.9687264 0.31247106 0.9375118 0.03127894 0.9375236 0.03127894 0.9687382 0.31244212 0.9687382</float_array>
+<technique_common>
+<accessor count="30" source="#Plane-tex-mesh-0-uvs-array" stride="2">
+<param name="S" type="float"/>
+<param name="T" type="float"/>
+</accessor>
+</technique_common>
+</source>
+<vertices id="Plane-tex-mesh-0-vertices">
+<input semantic="POSITION" source="#Plane-tex-mesh-0-positions"/>
+</vertices>
+<triangles count="12" material="Plane-tex-mesh-0-lambert0-material">
+<input offset="0" semantic="VERTEX" source="#Plane-tex-mesh-0-vertices"/>
+<input offset="1" semantic="TEXCOORD" set="0" source="#Plane-tex-mesh-0-uvs"/>
+<p>0 0 1 1 2 2 0 3 3 4 1 5 5 7 4 6 6 8 7 10 4 9 5 11 1 13 6 12 2 14 5 16 6 15 1 17 4 12 3 13 0 14 4 15 7 16 3 17 6 18 0 19 2 20 6 21 4 22 0 23 3 25 5 24 1 26 7 28 5 27 3 29</p>
+</triangles>
+</mesh>
+</geometry>
+</library_geometries>
+<library_visual_scenes>
+<visual_scene id="Scene" name="Scene">
+<node id="grass.merged" name="Grass.Merged" type="NODE">
+<translate sid="location">2.0 -0.0 -0.0</translate>
+<rotate sid="rotationZ">0 0 1 0</rotate>
+<rotate sid="rotationY">0 1 0 0</rotate>
+<rotate sid="rotationX">1 0 0 0</rotate>
+<scale sid="scale">1.0 1.0 1.0</scale>
+<instance_geometry name="Merged" sid="grass.merged" url="#Plane-tex-mesh-0">
+<bind_material>
+<technique_common>
+<instance_material symbol="lambert0-material" target="#lambert0-material">
+<bind_vertex_input input_semantic="TEXCOORD" input_set="0" semantic="TEX0"/>
+</instance_material>
+</technique_common>
+</bind_material>
+</instance_geometry>
+</node>
+</visual_scene>
+</library_visual_scenes>
+<scene>
+<instance_visual_scene url="#Scene"/>
+</scene>
+</COLLADA>
