@@ -9,6 +9,7 @@ public class MenuScript : MonoBehaviour {
     public GameObject creditsGameObject;
     public GameObject menuGameObject;
     public GameObject shopGameObject;
+    public GameObject settingsGameObject;
 
     public void StartGame() {
         SceneManager.LoadScene(1);
@@ -21,6 +22,17 @@ public class MenuScript : MonoBehaviour {
 
     public void ExitShop() {
         shopGameObject.SetActive(false);
+        menuGameObject.SetActive(true);
+    }
+
+    public void Settings() {
+        settingsGameObject.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
+
+    public void ExitSettings() {
+        settingsGameObject.SetActive(false);
         menuGameObject.SetActive(true);
     }
     

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1558500758762194632}
   - component: {fileID: 8742780477773883413}
   - component: {fileID: -1084774172719706009}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: PistolReload
-  m_TagString: Untagged
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ AudioSource:
   m_GameObject: {fileID: 1558500758762194633}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1241200638073055672, guid: 612058b8a238248428d0246739d6e729, type: 2}
   m_audioClip: {fileID: 8300000, guid: 24123519bd7423943aa6b1ca2c0575dd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1

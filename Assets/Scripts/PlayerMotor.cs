@@ -42,6 +42,8 @@ public class PlayerMotor : MonoBehaviour {
 	public GameObject fastStepsSound;
 
 	private void Awake() {
+		if (!PlayerPrefs.HasKey("Controls.Sens")) PlayerPrefs.SetInt("Controls.Sens", 20);
+		
 		Time.timeScale = 1f;
 		Cursor.visible = false;
 		
@@ -61,6 +63,7 @@ public class PlayerMotor : MonoBehaviour {
 	}
 
 	private void Start() {
+		sens = PlayerPrefs.GetInt("Controls.Sens");
 		normalSpeed = speed;
 		maxStamina = stamina;
 		timeStaminaRegenerate = timeNeedsStaminaRegenerate;
@@ -183,5 +186,5 @@ public class PlayerMotor : MonoBehaviour {
 			gunSystemScript.SetCurrentGun(gunSystemScript.currentGun + 1);
 		}
 	}
-	
+
 }

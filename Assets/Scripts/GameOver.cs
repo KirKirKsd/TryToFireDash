@@ -15,6 +15,7 @@ public class GameOver : MonoBehaviour {
 
     private void Start() {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         score = PlayerPrefs.GetInt("LastScore");
         money = score / 10;
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + money);

@@ -66,6 +66,7 @@ public class Upgrades : MonoBehaviour {
         Randomize();
         canUpgrade = true;
         GetComponent<PlayerMotor>().walk.Disable();
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         Time.timeScale = 0f;
     }   
@@ -166,6 +167,7 @@ public class Upgrades : MonoBehaviour {
         isSecondUpgrade = false;
         wavesScript.StartWave();
         GetComponent<PlayerMotor>().walk.Enable();
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 

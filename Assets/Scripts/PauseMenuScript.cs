@@ -11,6 +11,7 @@ public class PauseMenuScript : MonoBehaviour {
 	private PlayerMotor playerMotorScript;
 
     private void Start() {
+	    Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		playerMotorScript = GetComponent<PlayerMotor>();
     }
@@ -31,17 +32,21 @@ public class PauseMenuScript : MonoBehaviour {
 	private void Resume() {
 		PauseMenuUI.SetActive(false);
 		SettingsUI.SetActive(false);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<MusicPlayer>().controlsUI.SetActive(false);
 		if (!upgradesScript.canUpgrade) {
 			playerMotorScript.walk.Enable();
 			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
 			Time.timeScale = 1f;
 		}
     }
 
 	private void Pause() {
 		PauseMenuUI.SetActive(true);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<MusicPlayer>().controlsUI.SetActive(true);
 		playerMotorScript.walk.Disable();
 		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.Confined;
 		Time.timeScale = 0f;
     }
 

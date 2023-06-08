@@ -10,6 +10,7 @@ TagManager:
   - GunSystem
   - MoveByMouse
   - Score
+  - Sound
   layers:
   - Default
   - TransparentFX
