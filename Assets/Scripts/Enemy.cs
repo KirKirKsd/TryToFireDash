@@ -43,6 +43,12 @@ public class Enemy : MonoBehaviour {
             TakeDamage(damage);
         }
     }
-    
+
+    public float NeedAngle(Vector3 pos1, Vector3 pos2) {
+        pos1.x -= pos2.x;
+        pos1.z -= pos2.z;
+
+        return Mathf.Atan2(pos1.x, pos1.z) * Mathf.Rad2Deg;
+    }
 
 }

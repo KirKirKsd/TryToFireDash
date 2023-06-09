@@ -28,13 +28,13 @@ public class GunSystem : MonoBehaviour {
     private void Awake() {
         shootingScript = GetComponent<Shooting>();
         
-        riffle1.damage = 10;
+        riffle1.damage = 18;
         riffle1.ammo = 90;
         riffle1.magAmmo = 30;
         riffle1.needCooldown = 0.2f;
         riffle1.otd = 1.2f;
 
-        riffle2.damage = 15;
+        riffle2.damage = 28;
         riffle2.ammo = 60;
         riffle2.magAmmo = 20;
         riffle2.needCooldown = 0.5f;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyToPlayer : MonoBehaviour {
 
-    public GameObject player;
+    private GameObject player;
     public float speed = 2f;
     public float damage = 10f;
     public float attackRange = 3f;
@@ -13,6 +13,9 @@ public class EnemyToPlayer : MonoBehaviour {
     
     public float needMoveCooldown = 2f;
     private float moveCooldown;
+
+    private float extAngle;
+    public float needExtAngle;
 
     private void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -30,10 +33,16 @@ public class EnemyToPlayer : MonoBehaviour {
             moveCooldown += Time.deltaTime;
         }
         
+        transform.rotation = Quaternion.Euler(0f, GetComponent<Enemy>().NeedAngle(transform.position, player.transform.position) + 180f + extAngle, 0f);
+        
         if (Vector3.Distance(transform.position, player.transform.position) > attackRange && moveCooldown >= needMoveCooldown) {
+            extAngle = 0;
+            GetComponentInChildren<Animator>().SetBool("isWalk", true);
             Move();    
         }
         else if (cooldown >= needCooldown) {
+            extAngle = needExtAngle;
+            GetComponentInChildren<Animator>().SetBool("isWalk", false);
             Damage();
         }
     }

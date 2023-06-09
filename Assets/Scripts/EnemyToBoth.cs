@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class EnemyToBoth : MonoBehaviour {
 
-    public GameObject bonfire;
-    public GameObject player;
+    private GameObject bonfire;
+    private GameObject player;
 
     public float speed = 2f;
     public float damage = 10f;
@@ -18,6 +18,9 @@ public class EnemyToBoth : MonoBehaviour {
     
     public float needMoveCooldown = 2f;
     private float moveCooldown;
+    
+    private float extAngle;
+    public float needExtAngle;
 
     private void Start() {
         bonfire = GameObject.FindGameObjectWithTag("Bonfire");
@@ -40,9 +43,11 @@ public class EnemyToBoth : MonoBehaviour {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (distanceToBonfire < distanceToPlayer) {
+            transform.rotation = Quaternion.Euler(0f, GetComponent<Enemy>().NeedAngle(transform.position, Vector3.zero) + 180f + extAngle, 0f);
             MoveToBonfire();
         }
         else if (distanceToBonfire >= distanceToPlayer) {
+            transform.rotation = Quaternion.Euler(0f, GetComponent<Enemy>().NeedAngle(transform.position, player.transform.position) + 180f + extAngle, 0f);
             MoveToPlayer();
         } 
     }
@@ -51,11 +56,15 @@ public class EnemyToBoth : MonoBehaviour {
         if (distanceToBonfire > attackRange && moveCooldown >= needMoveCooldown) {
             var moveTo = Vector3.MoveTowards(transform.position, bonfire.transform.position, speed * Time.deltaTime);
             transform.position = new Vector3(moveTo.x, transform.position.y, moveTo.z);
+            extAngle = 0;
+            GetComponentInChildren<Animator>().SetBool("isWalk", true);
         }
         else if (cooldown >= needCooldown) {
             cooldown = 0f;
             moveCooldown = 0f;
             bonfire.GetComponent<Bonfire>().TakeDamage(damage);
+            extAngle = needExtAngle;
+            GetComponentInChildren<Animator>().SetBool("isWalk", false);
         }
     }
 
@@ -63,11 +72,15 @@ public class EnemyToBoth : MonoBehaviour {
         if (distanceToPlayer > attackRange && moveCooldown >= needMoveCooldown) {
             var moveTo = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
             transform.position = new Vector3(moveTo.x, transform.position.y, moveTo.z);
+            extAngle = 0;
+            GetComponentInChildren<Animator>().SetBool("isWalk", true);
         }
         else if (cooldown >= needCooldown) {
             cooldown = 0f;
             moveCooldown = 0f;
             player.GetComponent<Player>().TakeDamage(damage);
+            extAngle = needExtAngle;
+            GetComponentInChildren<Animator>().SetBool("isWalk", false);
         }
     }
     

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyToBonfire : MonoBehaviour {
 
-    public GameObject bonfire;
+    private GameObject bonfire;
 
     public float damage = 10f;
 
@@ -13,6 +13,9 @@ public class EnemyToBonfire : MonoBehaviour {
     private float cooldown;
     public float attackRange = 3f;
 
+    private float extAngle;
+    public float needExtAngle;
+    
     private void Start() {
         bonfire = GameObject.FindGameObjectWithTag("Bonfire");
         
@@ -25,11 +28,17 @@ public class EnemyToBonfire : MonoBehaviour {
         }
 
         needMove = Vector3.Distance(transform.position, bonfire.transform.position) > attackRange;
+        
+        transform.rotation = Quaternion.Euler(0f, GetComponent<Enemy>().NeedAngle(transform.position, Vector3.zero) + 180f + extAngle, 0f);
 
         if (needMove) {
+            extAngle = 0;
+            GetComponentInChildren<Animator>().SetBool("isWalk", true); 
             Move();    
         }
         else if (cooldown >= needCooldown) {
+            extAngle = needExtAngle;
+            GetComponentInChildren<Animator>().SetBool("isWalk", false);
             Damage();
         }
     }

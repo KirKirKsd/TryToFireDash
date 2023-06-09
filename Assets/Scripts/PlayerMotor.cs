@@ -41,6 +41,8 @@ public class PlayerMotor : MonoBehaviour {
 	public GameObject stepsSound;
 	public GameObject fastStepsSound;
 
+	public Animator modelAnim;
+
 	private void Awake() {
 		if (!PlayerPrefs.HasKey("Controls.Sens")) PlayerPrefs.SetInt("Controls.Sens", 20);
 		
@@ -86,6 +88,9 @@ public class PlayerMotor : MonoBehaviour {
 
 		stepsSound.SetActive(speed == 2);
 		fastStepsSound.SetActive(speed == 4);
+		
+		modelAnim.SetInteger("speed", (int) speed);
+		modelAnim.SetFloat("mirrorCof", walk.Movement.ReadValue<Vector2>().y);
 
 		if (walk.Shoot.ReadValue<float>() > 0.1f) Shoot();
 

@@ -53,8 +53,8 @@ public class Waves : MonoBehaviour {
         
         switch (currentWave % 3) {
             case 1:
-                if (enemiesToPlayerT.Count > 0) {
-                    randomI = Random.Range(0, enemiesToPlayerT.Count - 1);
+                if (enemiesToPlayerT.Count > 0) { 
+                    randomI = Random.Range(0, enemiesToPlayerT.Count);
                     enemiesCanSpawn.Add(enemiesToPlayerT[randomI]);
                     enemiesToPlayerCode += enemiesToPlayer.IndexOf(enemiesToPlayerT[randomI]);
                     enemiesToPlayerT.Remove(enemiesToPlayerT[randomI]);
